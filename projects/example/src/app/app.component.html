@@ -1,0 +1,11 @@
+<html>
+<body>
+  <button (click)="publishUserChangedEvent()">Publish UserChangedEvent</button>
+  &nbsp;
+  <button (click)="publishUserDeleteEvent()">Publish UserDeletedEvent</button>
+  <br>
+  <br>
+  <label>Last Event: {{lastEvent?.constructor?.name}}</label>
+</body>
+
+</html>
