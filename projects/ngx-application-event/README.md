@@ -1,24 +1,57 @@
-# NgxApplicationEvent
+# General Application Event Listener
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.2.
 
-## Code scaffolding
+## Usage
 
-Run `ng generate component component-name --project ngx-application-event` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-application-event`.
-> Note: Don't forget to add `--project ngx-application-event` or else it will be added to the default project in your `angular.json` file. 
+```ts
+// define custom event types
 
-## Build
+class UserDeleted {}
+```
 
-Run `ng build ngx-application-event` to build the project. The build artifacts will be stored in the `dist/` directory.
+```ts
+// publish event
 
-## Publishing
+@Component({...})
+export class AppPublisher {
+  constructor(private applicationEventService: NgxApplicationEventService) {
+  }
 
-After building your library with `ng build ngx-application-event`, go to the dist folder `cd dist/ngx-application-event` and run `npm publish`.
+  publish(): void {
+    this.applicationEventService.publish(new UserDeleted())
+  }
+}
+```
 
-## Running unit tests
+```ts
+// listen event in Component
 
-Run `ng test ngx-application-event` to execute the unit tests via [Karma](https://karma-runner.github.io).
+@Component({...})
+export class AppListener {
+  
+  @NgxEventListener
+  private on(event: UserDeleted) {
+    console.log(`New event: [${event.constructor.name}]`);
+  }
+}
+```
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```ts
+// listen event in Service
+
+@Service({...})
+export class AppListener {
+  constructor(private applicationEventService: NgxApplicationEventService) {
+  }
+
+  publish(): void {
+    this.applicationEventService.publish(new UserDeleted())
+  }
+
+  list(): void {
+    this.applicationEventService.listen(UserDeleted).subscribe(console.log)
+  }
+}
+```

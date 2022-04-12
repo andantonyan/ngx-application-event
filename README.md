@@ -18,13 +18,15 @@ export class AppPublisher {
   constructor(private applicationEventService: NgxApplicationEventService) {
   }
 
-  publishEvent(): void {
-    this.applicationEventService.publishEvent(new UserDeleted())
+  publish(): void {
+    this.applicationEventService.publish(new UserDeleted())
   }
 }
 ```
 
 ```ts
+// listen event in Component
+
 @Component({...})
 export class AppListener {
   
@@ -34,6 +36,26 @@ export class AppListener {
   }
 }
 ```
+
+
+```ts
+// listen event in Service
+
+@Service({...})
+export class AppListener {
+  constructor(private applicationEventService: NgxApplicationEventService) {
+  }
+
+  publish(): void {
+    this.applicationEventService.publish(new UserDeleted())
+  }
+
+  list(): void {
+    this.applicationEventService.listen(UserDeleted).subscribe(console.log)
+  }
+}
+```
+
 
 
 ## Run example application
