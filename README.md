@@ -50,7 +50,7 @@ export class AppListener {
     this.applicationEventService.publish(new UserDeleted())
   }
 
-  list(): void {
+  listen(): void {
     this.applicationEventService.listen(UserDeleted).subscribe(console.log)
   }
 }
