@@ -37,11 +37,10 @@ export function NgxEventListener(target: any, propertyKey: string, descriptor: P
   };
 
   target.ngOnDestroy = function () {
-    ngOnDestroy.call(this);
     unsubscribe$.next();
     unsubscribe$.complete();
 
-    if (ngOnInit) ngOnDestroy();
+    if (ngOnDestroy) ngOnDestroy.call(this);
   };
 
   return descriptor;
