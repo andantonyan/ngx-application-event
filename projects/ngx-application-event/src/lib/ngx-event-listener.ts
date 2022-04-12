@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import { ɵNG_COMP_DEF as NG_COMP_DEF } from '@angular/core';
 import { Subject } from 'rxjs';
-import { filter, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { NgxApplicationEventModule } from './ngx-application-event.module';
 
@@ -28,10 +28,10 @@ export function NgxEventListener(target: any, propertyKey: string, descriptor: P
   const unsubscribe$ = new Subject<void>();
 
   target.ngOnInit = function () {
-    NgxApplicationEventModule.getApplicationEventService().events$.pipe(
-      takeUntil(unsubscribe$),
-      filter(e => e instanceof type)
-    ).subscribe(e => descriptor.value.call(this, e));
+    NgxApplicationEventModule.getApplicationEventService()
+      .listen(type)
+      .pipe(takeUntil(unsubscribe$))
+      .subscribe(e => descriptor.value.call(this, e));
 
     if (ngOnInit) ngOnInit.call(this);
   };

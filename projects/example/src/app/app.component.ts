@@ -16,15 +16,15 @@ class UserDeletedEvent {
 export class AppComponent {
   lastEvent: UserChangedEvent | UserDeletedEvent | null = null;
 
-  constructor(private ngxApplicationEventService: NgxApplicationEventService) {
+  constructor(private readonly ngxApplicationEventService: NgxApplicationEventService) {
   }
 
   publishUserChangedEvent() {
-    this.ngxApplicationEventService.publishEvent(new UserChangedEvent())
+    this.ngxApplicationEventService.publish(new UserChangedEvent())
   }
 
   publishUserDeleteEvent() {
-    this.ngxApplicationEventService.publishEvent(new UserDeletedEvent())
+    this.ngxApplicationEventService.publish(new UserDeletedEvent())
   }
 
   @NgxEventListener

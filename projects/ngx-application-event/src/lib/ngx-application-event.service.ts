@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NgxApplicationEventService {
-  events$ = new Subject<unknown>();
+  private events$ = new Subject<unknown>();
 
-  publishEvent(event: object) {
+  publish(event: object): void {
     this.events$.next(event);
+  }
+
+  listen<T extends Function>(type: T): Observable<T> {
+    return this.events$.pipe(filter(e => e instanceof type)) as Observable<T>;
   }
 }
