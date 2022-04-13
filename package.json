@@ -1,6 +1,15 @@
 {
   "name": "ngx-application-event",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andantonyan/ngx-application-event.git"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/andantonyan/ngx-application-event#readme",
+  "bugs": {
+    "url": "https://github.com/andantonyan/ngx-application-event/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
